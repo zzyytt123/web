@@ -118,7 +118,7 @@
         // 初始化时获取并显示当前数字
         async function fetchAndDisplayNumber() {
             try {
-                const response = await fetch('https://your-backend-server-url/api/get_number');
+                const response = await fetch('http://127.0.0.1:5000/api/get_number'); // 替换为你的后端服务器地址
                 if (response.ok) {
                     const data = await response.json();
                     document.getElementById('display-number').innerText = `Current Number: ${data.number}`;
@@ -127,7 +127,7 @@
                 }
             } catch (error) {
                 console.error('There was a problem with the fetch operation:', error);
-                document.getElementById('display-number').innerText = 'Current Number: Not available';
+                document.getElementById('display-number').innerText = 'Current Number  : Not available';
             }
         }
 
