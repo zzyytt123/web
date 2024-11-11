@@ -13,8 +13,58 @@
     <link href="css/styles.css" rel="stylesheet" type="text/css" />
     <link href="css/demo.css" rel="stylesheet" type="text/css" />
     <link href="css/loaders.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .file-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .file-list li {
+            background-color: #f4f4f4;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+    </style>
+
 </head>
+
 <body>
+
+    <ul id="fileList" class="file-list"></ul>
+
+    <script>
+        // 模拟从服务器获取文件列表
+        async function fetchFileList() {
+            try {
+                const response = await fetch('/api/files'); // 假设你的后端 API 路径是 /api/files
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const files = await response.json();
+                displayFiles(files);
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            }
+        }
+
+        function displayFiles(files) {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = ''; // 清空现有文件列表
+
+            files.forEach(file => {
+                const listItem = document.createElement('li');
+                listItem.textContent = file.name; // 假设文件对象有一个 name 属性
+                fileList.appendChild(listItem);
+            });
+        }
+
+        // 初始化时加载文件列表
+        fetchFileList();
+    </script>
 
     <div class='success'></div>
     <div class='disclaimer'>
@@ -25,16 +75,11 @@
 
     <link href="layui/css/layui.css" rel="stylesheet" type="text/css" />
 
-<!--    <script type="text/javascript" src="js/jquery.min.js"></script>-->
-<!--    <script type="text/javascript" src="js/jquery-ui.min.js"></script>-->
-<!--    <script type="text/javascript" src='js/stopExecutionOnTimeout.js?t=1'></script>-->
-<!--    <script type="text/javascript" src="layui/layui.js"></script>-->
-<!--    <script type="text/javascript" src="js/Particleground.js"></script>-->
-<!--    <script type="text/javascript" src="Js/Treatment.js"></script>-->
-<!--    <script type="text/javascript" src="js/jquery.mockjax.js"></script>-->
-
     <!-- 添加显示时间的元素 -->
-    <div id="current-time" style="position: fixed; top: 10px; left: 10px; font-size: 36px; color: #fff;"></div>
+    <div id="current-time" style="position: fixed; top: 10px; left: 10px; font-size: 24px; color: #fff;"></div>
+
+    <!-- 添加显示数字的元素 -->
+    <div id="display-number" style="position: fixed; top: 60px; left: 10px; font-size: 24px; color: #fff;"></div>
 
     <script type="text/javascript">
         var canGetCookie = 0; //是否支持存储Cookie 0 不支持 1 支持
@@ -69,6 +114,25 @@
 
         // 初始化时显示当前时间
         showCurrentTime();
+
+        // 初始化时获取并显示当前数字
+        async function fetchAndDisplayNumber() {
+            try {
+                const response = await fetch('https://your-backend-server-url/api/get_number');
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('display-number').innerText = `Current Number: ${data.number}`;
+                } else {
+                    document.getElementById('display-number').innerText = 'Current Number: Not available';
+                }
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+                document.getElementById('display-number').innerText = 'Current Number: Not available';
+            }
+        }
+
+        // 初始化时加载当前数字
+        fetchAndDisplayNumber();
     </script>
 
     <script type="text/javascript" src="img/ThreeWebGL.js"></script>
