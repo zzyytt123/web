@@ -123,11 +123,11 @@
                     const data = await response.json();
                     document.getElementById('display-number').innerText = `Current Number: ${data.number}`;
                 } else {
-                    document.getElementById('display-number').innerText = 'Current Number: Not available';
+                    document.getElementById('display-number').innerText = 'Current Number: Not available1';
                 }
             } catch (error) {
                 console.error('There was a problem with the fetch operation:', error);
-                document.getElementById('display-number').innerText = 'Current Number  : Not available';
+                document.getElementById('display-number').innerText = 'Current Number  : Not available2';
             }
         }
 
